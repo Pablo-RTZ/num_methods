@@ -45,8 +45,6 @@ while (dif > tol) && (iter < maxiter)
     iter = iter + 1;
 end
 
-% Stopping criterion
-
 if iter >= maxiter
     sol = [];
     ACOC = [];
@@ -55,7 +53,8 @@ else
     sol = x1;
 
     if numel(I) >= 3
-        ACOC = log(I(3:end)./I(2:end-1)) ./ log(I(2:end-1)./I(1:end-2));
+        ACOC = log(I(3:end)./I(2:end-1)) ./ ...
+               log(I(2:end-1)./I(1:end-2));
     else
         ACOC = [];
     end
