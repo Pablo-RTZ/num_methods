@@ -1,7 +1,7 @@
 function [sol, dif, iter, ACOC] = Newton(f, df, opts)
 
 %Newton Newton-Raphson method for solving nonlinear equations.
-% Uses function handles, and step size as stopping criterion.
+% Uses function handles, and uses step size as stopping criterion.
 %
 %   sol = Newton(f, df)
 %   Uses 0 as initial guess, a 1e-10 tolerance, and 50 iterations by
