@@ -1,14 +1,14 @@
-function [sol, dif, iter, ACOC] = Traub(f, df, opts)
+function [sol, dif, iter, ACOC] = Secant(f, opts)
 
-%Traub Traub's method for solving nonlinear equations.
+%Secant Secant method for solving nonlinear equations.
 % Uses function handles, and uses step size as stopping criterion.
-% Traub's method is a two-step Newton-like method with third-order convergence.
+% This is a derivative-free method that approximates the derivative using previous points.
 %
-%   sol = Traub(f, df)
-%   Uses 0 as initial guess, a 1e-10 tolerance, and 50 iterations by
+%   sol = Secant(f)
+%   Uses 0 and 1 as initial guesses, a 1e-10 tolerance, and 50 iterations by
 %   default
 %
-%   sol = Traub(f, df, "x0", 1, "tol", 1e-8, "maxiter", 100)
+%   sol = Secant(f, "x0", 0, "x1", 2, "tol", 1e-8, "maxiter", 100)
 %   allows name-value pair inputs in any order.
 %
 %   Outputs:
@@ -19,9 +19,9 @@ function [sol, dif, iter, ACOC] = Traub(f, df, opts)
 
 arguments
     f (1,1) function_handle
-    df (1,1) function_handle
 
     opts.x0 (1,1) double = 0
+    opts.x1 (1,1) double = 1
     opts.tol (1,1) double = 1e-10
     opts.maxiter (1,1) double = 50
 end
@@ -29,6 +29,7 @@ end
 % Initialization
 
 x0 = opts.x0;
+x1 = opts.x1;
 tol = opts.tol;
 maxiter = opts.maxiter;
 
@@ -39,11 +40,11 @@ I = [];
 % Main loop
 
 while (dif > tol) && (iter < maxiter)
-    y0 = x0 - f(x0)/df(x0);
-    x1 = y0 - f(y0)/df(x0);
-    dif = abs(x1 - x0);
+    x2 = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0));
+    dif = abs(x2 - x1);
     I(end+1) = dif;
     x0 = x1;
+    x1 = x2;
     iter = iter + 1;
 end
 
@@ -54,7 +55,7 @@ if iter >= maxiter
     ACOC = [];
     disp("The method has not converged to a root")
 else
-    sol = x1;
+    sol = x2;
     
     if numel(I) >= 3
         ACOC = log(I(3:end)./I(2:end-1)) ./ log(I(2:end-1)./I(1:end-2));

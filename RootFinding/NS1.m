@@ -1,14 +1,14 @@
-function [sol, dif, iter, ACOC] = Traub(f, df, opts)
+function [sol, dif, iter, ACOC] = NS1(f, df, opts)
 
-%Traub Traub's method for solving nonlinear equations.
+%NS1 Modified Newton's method for solving nonlinear equations with multiple roots.
 % Uses function handles, and uses step size as stopping criterion.
-% Traub's method is a two-step Newton-like method with third-order convergence.
+% This method is designed for roots of multiplicity m.
 %
-%   sol = Traub(f, df)
-%   Uses 0 as initial guess, a 1e-10 tolerance, and 50 iterations by
-%   default
+%   sol = NS1(f, df)
+%   Uses multiplicity m=1 (standard Newton), 0 as initial guess, 
+%   a 1e-10 tolerance, and 50 iterations by default
 %
-%   sol = Traub(f, df, "x0", 1, "tol", 1e-8, "maxiter", 100)
+%   sol = NS1(f, df, "x0", 1, "m", 2, "tol", 1e-8, "maxiter", 100)
 %   allows name-value pair inputs in any order.
 %
 %   Outputs:
@@ -22,6 +22,7 @@ arguments
     df (1,1) function_handle
 
     opts.x0 (1,1) double = 0
+    opts.m (1,1) double = 1
     opts.tol (1,1) double = 1e-10
     opts.maxiter (1,1) double = 50
 end
@@ -29,6 +30,7 @@ end
 % Initialization
 
 x0 = opts.x0;
+m = opts.m;
 tol = opts.tol;
 maxiter = opts.maxiter;
 
@@ -39,8 +41,7 @@ I = [];
 % Main loop
 
 while (dif > tol) && (iter < maxiter)
-    y0 = x0 - f(x0)/df(x0);
-    x1 = y0 - f(y0)/df(x0);
+    x1 = x0 - m * f(x0) / df(x0);
     dif = abs(x1 - x0);
     I(end+1) = dif;
     x0 = x1;
