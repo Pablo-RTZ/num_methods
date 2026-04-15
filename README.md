@@ -1,6 +1,6 @@
 # num_methods
 
-A repository of academic scripts in MatLab ranging various areas of numerical methods. Its aim is to provide clean and understandable code, more tailored towards academic applications rather than production code.
+A repository of academic Matlab scripts ranging various areas of numerical methods. It aims to provide clean and understandable code, more tailored towards academic applications rather than production code.
 
 ## License
 
