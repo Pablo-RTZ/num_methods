@@ -6,11 +6,11 @@ This section is dedicated to explaining the root finding methods included on thi
 
 Additionally, the implementation of these methods is meant to be academic, prioritizing the code being readable over efficiency. Several programming choices, such as the general preference to use step size $|x_{n+1}-x_n|$ over error $|f(x_n)|$ as a stopping criterion, or the use of options for additional arguments, are not relevant for the method being valid.
 
-Except for the bisection method, the methods described here are fixed-point iterative methods. Let $f(x)$ be a function whose root is sought, so that $f(x^*) = 0$. A fixed-point function is a function $g(x)$ such that $g(x^*) = x^*$. In that case, the sequence $\{ x_n \}_{n=0}^\infty$, defined by $x_{n+1} = g(x_n)$, converges to its fixed point, which is also a root of the original function. Consequently, both $|x_{n+1} - x_n|$ and $|f(x_n)|$ converge to 0. The methods described here are of the form $x_{n+1} = G(x_n, f(x_n), f'(x_n), \dots)$, and, for a sufficiently smooth function and an initial guess $x_0$ sufficiently close to the root, they will converge. Generally, convergence criterion for the methods will not get more specific than this.
+Except for the bisection method, the methods described here are fixed-point iterative methods. Let $f(x)$ be a function whose root is sought, so that $f(x_{\text{root}}) = 0$. A fixed-point function is a function $g(x)$ such that $g(x_{\text{root}}) = x_{\text{root}}$. In that case, the sequence $\{ x_n \}_{n=0}^\infty$, defined by $x_{n+1} = g(x_n)$, converges to its fixed point, which is also a root of the original function. Consequently, both $|x_{n+1} - x_n|$ and $|f(x_n)|$ converge to 0. The methods described here are of the form $x_{n+1} = G(x_n, f(x_n), f'(x_n), \dots)$, and, for a sufficiently smooth function and an initial guess $x_0$ sufficiently close to the root, they will converge. Generally, convergence criterion for the methods will not get more specific than this.
 
 ## Bisection
 
-This is usually the first root finding method taught. It is a bracketing methods, that starts in the interval $(a,b)$ whose endpoints must have oposite signs ($sign(f(a))\ne sign(f(b))$). The midpoint is calculated, and depending on the sign of the functional evaluation at the midpoint, a new bracket is chosen. It reduces the searchspace by half on each iteration, so the error is approximately $e_{n+1}=\frac{e_n}2\implies e_n\approx |b-a|\cdot(\frac 12)^n$, making it a linear method (order of convergence 1). If the signs of the functional evaluations of the inital interval are opposite, it will always converge to a root.
+This is usually the first root finding method taught. It is a bracketing methods, that starts in the interval $(a,b)$ whose endpoints must have oposite signs ($sign(f(a))\ne sign(f(b))$). The midpoint is calculated, and depending on the sign of the functional evaluation at the midpoint, a new bracket is chosen. It reduces the searchspace by half on each iteration, so the error is approximately $e_{n+1}=\frac{e_n}2\implies e_n\approx |b-a|\cdot\left(\frac 12\right)^n$, making it a linear method (order of convergence 1). If the signs of the functional evaluations of the inital interval are opposite, it will always converge to a root.
 
 ## Newton
 
@@ -78,7 +78,7 @@ Steffensen's method is a derivative-free method that achieves quadratic converge
 
 $$x_{n+1} = x_n - \frac{f(x_n)^2}{f(x_n + f(x_n)) - f(x_n)}$$
 
-It can be seen as Newton's method with $f'(x_n) \approx \frac{f(x_n + f(x_n)) - f(x_n)}{f(x_n)}$. The method converges quadratically for simple roots, provided $x_0$ is sufficiently close to the root and $f'(x^*) \ne 0$. It requires two function evaluations per iteration. One edge case is when $f(x_n)$ is very large, causing the step $f(x_n)$ in the argument to be extreme.
+It can be seen as Newton's method with $f'(x_n) \approx \frac{f(x_n + f(x_n)) - f(x_n)}{f(x_n)}$. The method converges quadratically for simple roots, provided $x_0$ is sufficiently close to the root and $f'(x_{\text{root}}) \ne 0$. It requires two function evaluations per iteration. One edge case is when $f(x_n)$ is very large, causing the step $f(x_n)$ in the argument to be extreme.
 
 ## Traub
 
