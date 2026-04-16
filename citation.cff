@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: Numerical Methods
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Pablo
+    family-names: Ortiz Badenes
+repository-code: 'https://github.com/Pablo-RTZ/num_methods'
+abstract: >-
+  A repository of academic scripts in MatLab ranging various
+  areas of numerical methods.
+license: GPL-3.0-or-later
