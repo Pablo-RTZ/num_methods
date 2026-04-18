@@ -15,6 +15,10 @@
 
 ## Integration
 
+- Trapezoidal
+- Simpson
+- Monte-Carlo
+
 ## LinearSystems
 
 ## ODE
