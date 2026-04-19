@@ -3,13 +3,13 @@ function I = MonteCarlo(f,a,b,n)
 %MonteCarlo Monte-Carlo method for aproximating definite integrals.
 % Uses function handles
 %
-%   I = Simpson(f,a,b)
+%   I = MonteCarlo(f,a,b)
 %   Integrates in interval [a,b] using 500 points by default
 %
-%   I = Simpson(f,a,b, "n", 100)
-%   allows name-value pair inputs in any order.
+%   I = MonteCarlo(f,a,b, 100)
+%   changes number of points
 %
-%   Outputs:
+%   Inputs:
 %       f   - function handle
 %       a   - interval start
 %       b   - interval end

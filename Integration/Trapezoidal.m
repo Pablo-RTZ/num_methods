@@ -6,10 +6,10 @@ function I = Trapezoidal(f,a,b,n)
 %   I = Trapezoidal(f,a,b)
 %   Integrates in interval [a,b] using 50 points by default
 %
-%   I = Trapezoidal(f,a,b, "n", 100)
-%   allows name-value pair inputs in any order.
+%   I = Trapezoidal(f,a,b, 100)
+%   changes interval number
 %
-%   Outputs:
+%   Inputs:
 %       f   - function handle
 %       a   - interval start
 %       b   - interval end
