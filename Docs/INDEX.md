@@ -13,11 +13,20 @@
 - [Steffensen](RootFinding.md#steffensen)
 - [Traub](RootFinding.md#traub)
 
-## Integration
+## [Integration](Integration.md)
 
-- Trapezoidal
-- Simpson
-- Monte-Carlo
+- [Trapezoidal](Integration.md#trapezoidal)
+- [Simpson](Integration.md#simpson)
+- [Monte-Carlo](Integration.md#monte-carlo)
+- [Romberg](Integration.md#romberg)
+- [Gaussian Cuadrature](Integration.md#gaussian-cuadrature)
+  - [Legendre](Integration.md#legendre)
+  - [Chebyshev](Integration.md#chebyshev)
+  - [Laguerre](Integration.md#laguerre)
+  - [Hermite](Integration.md#hermite)
+  - [Lobatto](Integration.md#lobatto)
+- [Iterative schemes](Integration.md#iterative-schemes)
+- [Infinite and improper integrals](Integration.md#infinite-and-improper-integrals)
 
 ## LinearSystems
 
