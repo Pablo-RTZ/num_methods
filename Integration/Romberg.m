@@ -29,7 +29,7 @@ arguments
     a (1,1) double
     b (1,1) double
     opts.tol (1,1) int = 1e-10
-    opts.maxiter (1,1) int = 500
+    opts.maxiter (1,1) int = 100
 end
 
 if ~(a < b)
@@ -46,7 +46,7 @@ R(1,1)=Trapezoidal(f,a,b,n);
 
 % Main loop
 
-while and(dif>tol, iter<maxiter)
+while and(dif>opts.tol, iter<opts.maxiter)
     k=k+1; n=2*n; iter=iter+1;
     R(k,1)=Trapezoidal(f,a,b,n);
     for j=2:k
