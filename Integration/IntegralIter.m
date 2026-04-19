@@ -27,7 +27,7 @@ arguments
     method (1,1) str
     opts.a (1,1) double
     opts.b (1,1) double
-    opts.tol (1,1) int = 1e-10
+    opts.tol (1,1) double = 1e-10
     opts.maxiter (1,1) int = 100
 end
 
