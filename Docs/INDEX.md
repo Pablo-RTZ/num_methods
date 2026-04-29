@@ -32,6 +32,15 @@
 
 ## ODE
 
-## Interpolation
+## [Interpolation](Interpolation.md)
+
+- [Linear interpolation](Interpolation.md#linear-interpolation)
+- [Polynomial interpolation](Interpolation.md#polynomial-interpolation)
+- [Lagrange and Newton polynomials](Interpolation.md#lagrange-and-newton-polynomials)
+- [Splines](Interpolation.md#splines)
+- [Continuous approximation](Interpolation.md#continuous-approximation)
+  - [Legendre polynomials](Interpolation.md#legendre-polynomials)
+  - [Chebyshev polynomials](Interpolation.md#chebyshev-polynomials)
+  - [Trigonometric series](Interpolation.md#trigonometric-series)
 
 ## NonLinearSystems
