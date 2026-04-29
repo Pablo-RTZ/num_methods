@@ -6,7 +6,7 @@ function [I,dif,iter] = IntegralIter(f,method,opts)
 %   I = IntegralIter(f,method,"a",-1,"b",1)
 %   Integrates using the method given in the finite interval
 %
-%   I = IntegralIter(f,method,"tol",1e-8)
+%   I = IntegralIter(f,method,"tol",1e-8,"maxiter",200)
 %   Integrates in infinite intervals (and sets tolerance and maxiter)
 %
 %   Inputs:
@@ -48,6 +48,8 @@ dif=tol+1;
 iter=1;
 n=1;
 
+% Main loop
+
 while dif > opts.tol && iter < opts.maxiter
     n = 2*n;
     iter = iter + 1;
@@ -63,4 +65,17 @@ while dif > opts.tol && iter < opts.maxiter
     end
 
     I = I_new;
+end
+
+% Stopping criterion
+
+if dif>tol
+    disp("The method has not converged within the required tolerance")
+end
+
+% Optional outputs handling
+
+if nargout < 3, clear iter; end
+if nargout < 2, clear dif; end
+
 end

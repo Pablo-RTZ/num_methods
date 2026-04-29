@@ -37,7 +37,7 @@ Gauss–Legendre quadrature approximates integrals on $[-1, 1]$ (or transformed 
 
 ### Chebyshev
 
-Gauss–Chebyshev quadrature uses the roots of Chebyshev polynomials of the first kind $T_n(x)$ as nodes on $[-1, 1]$, with constant weights $w_i = \frac{\pi}{n}$. Designed for integrals of the form $\int_{-1}^{1} \frac{f(x)}{\sqrt{1-x^2}} dx$. In this implementation, only $f(x)$ has to be inputed, so without the $\sqrt{1-x^2}$ term.
+Gauss–Chebyshev quadrature uses the roots of Chebyshev polynomials of the first kind $T_n(x)$ as nodes on $[-1, 1]$, with constant weights $w_i = \frac{\pi}{n}$. Designed for integrals of the form $\int_{-1}^{1} \frac{f(x)}{\sqrt{1-x^2}} dx$. In this implementation, only $f(x)$ has to be inputed, without the $\sqrt{1-x^2}$ term.
 
 ### Laguerre
 
@@ -45,7 +45,7 @@ Gauss–Laguerre quadrature handles integrals on $[0, \infty)$ of the form $\int
 
 ### Hermite
 
-Gauss–Hermite quadrature targets integrals on $(-\infty, \infty)$ of the form $\int_{-\infty}^\infty e^{-x^2} f(x) dx$. Nodes are roots of Hermite polynomials $H_n(x)$. It is suitable for problems with Gaussian weighting. In this implementation, only $f(x)$ has to be inputed
+Gauss–Hermite quadrature targets integrals on $(-\infty, \infty)$ of the form $\int_{-\infty}^\infty e^{-x^2} f(x) dx$. Nodes are roots of Hermite polynomials $H_n(x)$. It is suitable for problems with Gaussian weighting. In this implementation, only $f(x)$ has to be inputed.
 
 ### Lobatto
 
@@ -53,4 +53,10 @@ Lobatto quadrature is a variant of Gaussian quadrature that includes the endpoin
 
 ## Iterative schemes
 
+The methods previously shown (except for Romberg) rely on the user choosing an appropriately high value for the number of points used, and do not provide an estimate for the error in the value obtained. Thus, it can be hard to choose a suitable value for $n$. Therefore, an iterative scheme can be used, to aproximate the integral with increasing values for $n$, and stop when consectutive iterations differ by less than a predefined tolerance.
+
 ## Infinite and improper integrals
+
+Similarly, infinite or (vertically) improper integrals can be aproximated with methods initally designed for definite integrals. With both, the integration interval is increasingly expanded so it gets close to the discontinuity, or to infinity (for example, integrating in $[a,2a],[2a,4a],...$). If the value of the integral on a given step is less than the desired tolerance, the method is considered to be convergent, and the value obtained is the sum of all the integrals. For vertically improper integrals, Gaussian cuadrature methods (except Lobatto) are exceptionally useful, as they do not include the endpoints as nodes, making it easier to avoid functional evaluations at the singularity, given numerical error is to be considered for high tolerances. However, this method can not reliably obtain results in functions with complex behaviour, as the terms getting smaller does not guarantee convergence.
+
+An alternate way to implement it, is to integrate in increasingly bigger intervals, and check the difference. To illustrate this, the infinite integrals are implemented with the first method, and the improper ones with the second method.
