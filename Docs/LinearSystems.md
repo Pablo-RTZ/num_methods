@@ -64,8 +64,6 @@ $$x_{n+1} = (D + L)^{-1}(b - U x_n)$$
 
 As each component is updated, new values are used immediately in subsequent component calculations. This typically converges faster than Jacobi for the same class of matrices, with roughly twice the convergence rate. Still first-order convergence.
 
-Based on the code you provided, here's the corrected documentation for SOR1 and SOR2:
-
 ## SOR1 and SOR2
 
 Successive Over-Relaxation accelerates convergence by extrapolating the Gauss-Seidel step. The method can be formulated in two different ways:
