@@ -30,7 +30,15 @@
 
 ## LinearSystems
 
-## ODE
+## [ODE](ODE.md)
+
+- [Euler](ODE.md#euler)
+- [Heun](ODE.md#heun)
+- [RungeKutta](ODE.md#rungekutta)
+- [AdamsBashforth](ODE.md#adamsbashforth)
+- [Milne method](ODE.md#milne-method)
+  - [Milne-Simpson](ODE.md#milne-simpson)
+  - [Milne-Trap](ODE.md#milne-trap)
 
 ## [Interpolation](Interpolation.md)
 
