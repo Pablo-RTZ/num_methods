@@ -28,7 +28,25 @@
 - [Iterative schemes](Integration.md#iterative-schemes)
 - [Infinite and improper integrals](Integration.md#infinite-and-improper-integrals)
 
-## LinearSystems
+## [LinearSystems](LinearSystems.md)
+
+- [Direct Methods](LinearSystems.md#direct-methods)
+  - [DS](LinearSystems.md#ds)
+  - [IS](LinearSystems.md#is)
+  - [Gauss Elimination](LinearSystems.md#gauss-elimination)
+  - [Cholesky Decomposition](LinearSystems.md#cholesky-decomposition)
+  - [CroutFact](LinearSystems.md#croutfact)
+  - [Crout](LinearSystems.md#crout)
+  - [CroutPenta](LinearSystems.md#croutpenta)
+  - [Householder](LinearSystems.md#householder)
+  - [QR](LinearSystems.md#qr)
+- [Iterative Methods](LinearSystems.md#iterative-methods)
+  - [Jacobi](LinearSystems.md#jacobi)
+  - [Gauss-Seidel](LinearSystems.md#gauss-seidel)
+  - [SOR1 and SOR2](LinearSystems.md#sor1-and-sor2)
+  - [JOR](LinearSystems.md#jor)
+  - [Gradient](LinearSystems.md#gradient)
+  - [Conjugate Gradient](LinearSystems.md#conjugate-gradient)
 
 ## [ODE](ODE.md)
 
