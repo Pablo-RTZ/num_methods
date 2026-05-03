@@ -9,10 +9,10 @@ This document is meant to plan out the components of the repository, both finish
 - Interpolation
 - IVP
 - Linear Systems + Factorization
+- Non Linear Systems
 
 ## Planned
 
-- Non Linear Systems
 - BVP
 - Example files for the methods
 

@@ -69,4 +69,11 @@
   - [Chebyshev polynomials](Interpolation.md#chebyshev-polynomials)
   - [Trigonometric series](Interpolation.md#trigonometric-series)
 
-## NonLinearSystems
+## [NonLinearSystems](NonLinearSystems.md)
+
+- [Newton](NonLinearSystems.md#newton)
+- [Traub](NonLinearSystems.md#traub)
+- [Trapezoidal](NonLinearSystems.md#trapezoidal)
+- [Jarrat](NonLinearSystems.md#jarrat)
+- [HMT](NonLinearSystems.md#hmt)
+- [M5](NonLinearSystems.md#m5)
