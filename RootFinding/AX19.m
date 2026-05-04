@@ -20,8 +20,7 @@ function [sol, dif, iter, ACOC] = AX19(f, df, opts)
 arguments
     f (1,1) function_handle
     df (1,1) function_handle
-
-    opts.x0 (1,1) double = 0
+    opts.x0 (1,1) {mustBeA(opts.x0, {'double','sym'})} = 0
     opts.tol (1,1) double = 1e-10
     opts.maxiter (1,1) double = 50
 end
@@ -54,7 +53,7 @@ if iter >= maxiter
     disp("The method has not converged to a root")
 else
     sol = x1;
-    
+
     if numel(I) >= 3
         ACOC = log(I(3:end)./I(2:end-1)) ./ log(I(2:end-1)./I(1:end-2));
     else

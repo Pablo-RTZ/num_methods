@@ -17,8 +17,8 @@ function [sol, dif, iter, ACOC] = Bisection(f, a, b, opts)
 
 arguments
     f (1,1) function_handle
-    a (1,1) double
-    b (1,1) double
+    a (1,1) {mustBeA(a, {'double','sym'})}
+    b (1,1) {mustBeA(b, {'double','sym'})}
 
     opts.tol (1,1) double = 1e-10
     opts.maxiter (1,1) double = 50

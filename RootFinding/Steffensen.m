@@ -20,7 +20,7 @@ function [sol, dif, iter, ACOC] = Steffensen(f, opts)
 arguments
     f (1,1) function_handle
 
-    opts.x0 (1,1) double = 0
+    opts.x0 (1,1) {mustBeA(opts.x0, {'double','sym'})} = 0
     opts.tol (1,1) double = 1e-10
     opts.maxiter (1,1) double = 50
 end

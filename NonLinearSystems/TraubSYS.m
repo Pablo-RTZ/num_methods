@@ -1,13 +1,13 @@
-function [sol,dif,res,x,iter, ACOC] = Traub(F, dF, opts)
+function [sol,dif,res,x,iter, ACOC] = TraubSYS(F, dF, opts)
 
-%Traub Traub's method for solving nonlinear systems.
+%TraubSYS Traub's method for solving nonlinear systems.
 % Uses function handles in vector form.
 %
-%   sol = Traub(F, dF)
+%   sol = TraubSYS(F, dF)
 %   Uses a vector of 0s as initial guess, a 1e-10 tolerance, and 50 iterations by
 %   default
 %
-%   sol = Traub(F, dF, "x0", 1, "tol", 1e-8, "maxiter", 100)
+%   sol = TraubSYS(F, dF, "x0", 1, "tol", 1e-8, "maxiter", 100)
 %   allows name-value pair inputs in any order.
 %
 %   Outputs:
