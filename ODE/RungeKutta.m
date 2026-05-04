@@ -2,7 +2,7 @@ function [X,Y] = RungeKutta(f, a,b, iv, n)
 
 %RungeKutta RungeKutta's method (RK4) for solving IVP.
 %
-%   [X, Y] = RungeKutta(f,domain, iv)
+%   [X, Y] = RungeKutta(f,a,b, iv)
 %   Solves the problem and returns function at evaluation nodes
 %
 %   Inputs:
@@ -10,7 +10,7 @@ function [X,Y] = RungeKutta(f, a,b, iv, n)
 %       a   - Interval start
 %       b   - Interval end
 %       iv  - Initial value
-%       n   - number of nodes to interpolate
+%       n   - Number of nodes to interpolate
 
 arguments
     f (:,1)

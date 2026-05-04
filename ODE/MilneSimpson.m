@@ -2,7 +2,7 @@ function [X,Y] = MilneSimpson(f, a,b, iv, n)
 
 %MilneSimpson Milne's method for solving IVP, using Simpson as integrator.
 %
-%   [X, Y] = MilneSimpson(f,domain, iv)
+%   [X, Y] = MilneSimpson(f,a,b, iv)
 %   Solves the problem and returns function at evaluation nodes
 %
 %   Inputs:
@@ -10,7 +10,7 @@ function [X,Y] = MilneSimpson(f, a,b, iv, n)
 %       a   - Interval start
 %       b   - Interval end
 %       iv  - Initial value
-%       n   - number of nodes to interpolate
+%       n   - Number of nodes to interpolate
 
 arguments
     f (:,1)
