@@ -3,10 +3,10 @@ function [I, dif, iter] = IntegralInf(f,method, a,sign,opts)
 %IntegralInf Applies an iterative scheme to aproximate infinite integrals.
 % Method must have arguments (f,a,b,n)
 %
-%   I = IntegralInf(f,method, 0,+,)
+%   I = IntegralInf(f,@method, 0,"+")
 %   Integrates using the method given in the interval [0,+Inf]
 %
-%   I = IntegralIter(f,method,0,-,"tol",1e-8,"maxiter",200)
+%   I = IntegralInf(f,@method,0,"-","tol",1e-8,"maxiter",200)
 %   Integrates in [-Inf, 0] with the given tolerance and maximum iterations
 %
 %   Inputs:
@@ -24,34 +24,35 @@ function [I, dif, iter] = IntegralInf(f,method, a,sign,opts)
 
 arguments
     f (1,1) function_handle
-    method (1,1) str
+    method (1,1) function_handle
     a (1,1) double
-    sign (1,1) str {mustBeMember(sign,{"+","-"})} = "+"
+    sign (1,1) string {mustBeMember(sign, ["+","-"])} = "+"
     opts.tol (1,1) double = 1e-10
-    opts.maxiter (1,1) int = 100
-end
-
-filename = method + ".m";
-if ~isfile(filename)
-    error("Method not found on current directory");
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 100
 end
 
 % Initialization
 
 iter = 1;
-dif = tol +1;
-x = a;
+dif = opts.tol +1;
 I = 0;
+x = 1;
+left = a;
 
-while abs(dif) < tol && iter < maxiter
+while abs(dif) > opts.tol && iter < opts.maxiter
     if sign == "+"
-        dif = IntegralIter(f,method,"a",x,"b",2*x,"tol",0.1*tol);
+        right = a + x;
+        dif = IntegralIter(f, method, "a", left, "b", right, "tol", 0.1*opts.tol);
+        left = right;
     else
-        dif = IntegralIter(f,method,"a",2*x,"b",x,"tol",0.1*tol);
+        right = a - x;
+        dif = IntegralIter(f, method, "a", right, "b", left, "tol", 0.1*opts.tol);
+        left = right;
     end
-    x = 2*x;
-    iter = iter+1;
+
     I = I + dif;
+    x = 2*x;
+    iter = iter + 1;
 end
 
 % Optional outputs handling

@@ -19,7 +19,7 @@ arguments
     f (1,1) function_handle
     a (1,1) double
     b (1,1) double
-    n (1,1) int = 500
+    n (1,1) double {mustBeInteger, mustBeNonnegative} = 500
 end
 
 if ~(a < b)
@@ -29,6 +29,6 @@ end
 % Main program
 
 nodes = a+(b-a)*rand(1,n);
-I = (b-a)/(2*n)*sum(f(nodes));
+I = (b-a)/n*sum(f(nodes));
 
 end

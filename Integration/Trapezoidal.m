@@ -4,7 +4,7 @@ function I = Trapezoidal(f,a,b,n)
 % Uses function handles
 %
 %   I = Trapezoidal(f,a,b)
-%   Integrates in interval [a,b] using 50 points by default
+%   Integrates in interval [a,b] using 10 points by default
 %
 %   I = Trapezoidal(f,a,b, 100)
 %   changes interval number
@@ -19,7 +19,7 @@ arguments
     f (1,1) function_handle
     a (1,1) double
     b (1,1) double
-    n (1,1) int = 50
+    n (1,1) double {mustBeInteger, mustBeNonnegative} = 10
 end
 
 if ~(a < b)

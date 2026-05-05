@@ -29,7 +29,7 @@ arguments
     a (1,1) double
     b (1,1) double
     opts.tol (1,1) double = 1e-10
-    opts.maxiter (1,1) int = 100
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 100
 end
 
 if ~(a < b)
@@ -38,7 +38,7 @@ end
 
 % Initialization
 
-dif=tol+1;
+dif=opts.tol+1;
 iter=1;
 n=1;
 k=1;
@@ -47,7 +47,9 @@ R(1,1)=Trapezoidal(f,a,b,n);
 % Main loop
 
 while and(dif>opts.tol, iter<opts.maxiter)
-    k=k+1; n=2*n; iter=iter+1;
+    k=k+1;
+    n=2*n;
+    iter=iter+1;
     R(k,1)=Trapezoidal(f,a,b,n);
     for j=2:k
         R(k,j)=(4^(j-1)*R(k,j-1)-R(k-1,j-1))/(4^(j-1)-1);
@@ -57,7 +59,7 @@ end
 
 % Stopping criterion
 
-if dif>tol
+if dif>opts.tol
     disp("The method has not converged within the required tolerance")
 else
     I=R(k,k);

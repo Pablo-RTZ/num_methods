@@ -19,7 +19,7 @@ arguments
     f (1,1) function_handle
     a (1,1) double
     b (1,1) double
-    n (1,1) int = 5
+    n (1,1) double {mustBeInteger, mustBeNonnegative} = 5
 end
 
 if ~(a < b)
