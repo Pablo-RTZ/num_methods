@@ -1,4 +1,4 @@
-function [sol,dif,res,x,iter, ACOC] = HMT(F, dF, opts)
+function [sol,dif,res,x,iter, ACOC] = HMT(F, dF, x0, opts)
 
 %HMT HMT method for solving nonlinear systems.
 % Uses function handles in vector form.
@@ -13,32 +13,34 @@ function [sol,dif,res,x,iter, ACOC] = HMT(F, dF, opts)
 %   Outputs:
 %       sol   - root approximation
 %       dif   - step sizes (vector)
-%       res - function evaluation at nodes |F(x0)|
+%       res   - function evaluation at nodes |F(x0)|
 %       x     - solution aproximations
 %       iter  - number of iterations
 %       ACOC  - Approximate Computational Order of Convergence
+%       p     - parameter
 
 arguments
     F (:,1) function_handle
     dF (:,:) function_handle
-    opts.x0 (:,1) double = zeros(len(F),1)
+    x0 (:,1) double
     opts.tol (1,1) double = 1e-10
-    opts.maxiter (1,1) int = 50
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 50
     opts.p (1,1) double = 1
 end
 
 % Initialization
 
 iter = 0;
-dif = tol+1;
-res = tol+1;
+dif = opts.tol+1;
+res = opts.tol+1;
+p = opts.p;
 
 F_x0 = F(x0);
 dF_x0 = dF(x0);
 
 % Main program
 
-while iter < maxiter && incr(end)+res(end) > tol
+while iter < opts.maxiter && dif(end)+res(end) > opts.tol
     iter = iter+1;
 
     y = x0 - dF_x0 \ F_x0;
@@ -50,7 +52,7 @@ while iter < maxiter && incr(end)+res(end) > tol
 
     F_z = F(z);
     x(:,iter) = x0 - dF_x0 \ (F_z + F_y + p*F_x0);
-    incr(iter) = norm(x(:,iter) - x0);
+    dif(iter) = norm(x(:,iter) - x0);
     
     x0 = x(:,iter);
     F_x0 = F(x0);
@@ -58,7 +60,7 @@ while iter < maxiter && incr(end)+res(end) > tol
     res(iter) = norm(F_x0);
 end
 
-if iter < maxiter
+if iter < opts.maxiter
     sol = x(:,end);
     ACOC = log(res(3:end)./res(2:end-1))./log(res(2:end-1)./res(1:end-2));
 else

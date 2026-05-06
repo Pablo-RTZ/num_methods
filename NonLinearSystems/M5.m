@@ -1,13 +1,12 @@
-function [sol,dif,res,x,iter, ACOC] = M5(F, dF, opts)
+function [sol,dif,res,x,iter, ACOC] = M5(F, dF, x0, opts)
 
 %M5 M5 method for solving nonlinear systems, using optimal parameters.
 % Uses function handles in vector form.
 %
-%   sol = M5(F, dF)
-%   Uses a vector of 0s as initial guess, a 1e-10 tolerance, and 50 iterations by
-%   default
+%   sol = M5(@F, @dF, x0)
+%   Uses a 1e-10 tolerance, and 50 iterations by default
 %
-%   sol = M5(F, dF, "x0", 1, "tol", 1e-8, "maxiter", 100)
+%   sol = M5(F, dF, x0, "tol", 1e-8, "maxiter", 100)
 %   allows name-value pair inputs in any order.
 %
 %   Outputs:
@@ -21,26 +20,25 @@ function [sol,dif,res,x,iter, ACOC] = M5(F, dF, opts)
 arguments
     F (:,1) function_handle
     dF (:,:) function_handle
-    opts.x0 (:,1) double = zeros(len(F),1)
+    x0 (:,1) double
     opts.tol (1,1) double = 1e-10
-    opts.maxiter (1,1) int = 50
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 50
 end
 
 % Initialization
 
-
 alpha = 1; beta = 0; rho = 0; gamma = 5; mu = -16/5; sigma = 1/5;
 
 iter = 0;
-dif = tol+1;
-res = tol+1;
+dif = opts.tol+1;
+res = opts.tol+1;
 
 F_x0 = F(x0);
 dF_x0 = dF(x0);
 
 % Main program
 
-while iter < maxiter && incr(end)+res(end) > tol
+while iter < opts.maxiter && dif(end)+res(end) > opts.tol
     iter = iter+1;
 
     y = x0 - alpha * (dF_x0 \ F_x0);
@@ -53,7 +51,7 @@ while iter < maxiter && incr(end)+res(end) > tol
 
     x(:,iter) = z - dF_x0 \ (rho*F_x0 + mu*F_y + sigma*F_z);
 
-    incr(iter) = norm(x(:,iter) - x0);
+    dif(iter) = norm(x(:,iter) - x0);
 
     x0 = x(:,iter);
     F_x0 = F(x0);
@@ -62,7 +60,7 @@ while iter < maxiter && incr(end)+res(end) > tol
 
 end
 
-if iter < maxiter
+if iter < opts.maxiter
     sol = x(:,end);
     ACOC = log(res(3:end)./res(2:end-1))./log(res(2:end-1)./res(1:end-2));
 else
