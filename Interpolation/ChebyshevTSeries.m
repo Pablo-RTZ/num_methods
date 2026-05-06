@@ -4,7 +4,7 @@ function [CT, c] = ChebyshevTSeries(f, N, a, b)
 %   Returns a symbolic function representing the N-term Truncated Chebyshev polynomial
 %   series expansion of f(x) over the interval [a, b].
 %
-%   [CT, c] = serieChebyshevT(f, N, a, b)
+%   [CT, c] = ChebyshevTSeries(f, N, a, b)
 %   Returns a symbolic function CT(x) that approximates f(x) on [a, b],
 %   as well as the Chebyshev coefficients.
 %
@@ -20,7 +20,7 @@ function [CT, c] = ChebyshevTSeries(f, N, a, b)
 
 arguments
     f sym
-    N (1,1) int
+    N (1,1) double {mustBeInteger, mustBeNonnegative}
     a (1,1) double
     b (1,1) double {mustBeGreaterThan(b, a)}
 end

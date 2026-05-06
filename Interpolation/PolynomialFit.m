@@ -4,7 +4,7 @@ function [coeffs, E] = PolynomialFit(xi, fi)
 %   Polynomial coefficients and error calculation for polynomial fitting
 %
 %   coeffs = PolynomialFit(xi, fi)
-%   Returns polynomial coefficients [a0, a1, ..., an] where 
+%   Returns polynomial coefficients [an, ..., a1, a0] where 
 %   S = a0 + a1*x + a2*x^2 + ... + an*x^n
 %
 %   Inputs:
@@ -38,7 +38,7 @@ M = xi.^exp;
 
 
 a = M \ fi;
-coeffs = a(:)';
+coeffs = fliplr(a(:)');
 
 E = sum((fi - M * a).^2);
 

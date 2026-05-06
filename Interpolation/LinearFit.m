@@ -4,7 +4,7 @@ function [coeffs, E] = LinearFit(xi, fi)
 %   Polynomial coefficients and error calculation for linear fitting
 %
 %   coeffs = LinearFit(xi, fi)
-%   Returns polynomial coefficients [a0, a1] where S = a0 + a1*x
+%   Returns polynomial coefficients [a1, a0] where S = a0 + a1*x
 %
 %   Inputs:
 %       xi  - independent variable data points
@@ -29,19 +29,13 @@ end
 
 % Main program
 
-xi2 = xi.^2;
-xifi = xi.*fi;
 n = length(xi);
+a1 = (n*sum(xi.*fi) - sum(xi)*sum(fi)) / (n*sum(xi.^2) - sum(xi)^2);
+a0 = (sum(fi) - a1*sum(xi)) / n;
 
-a0 = (sum(xi2)*sum(fi) - sum(xifi)*sum(xi)) / (n*sum(xi2) - sum(xi)^2);
-a1 = (n*sum(xifi) - sum(xi)*sum(fi)) / (n*sum(xi2) - sum(xi)^2);
+coeffs = [a1, a0];
 
-coeffs = [a0, a1];
-
-E = 0;
-for i = 1:n
-    E = E + (fi(i) - a0 - a1*xi(i))^2;
-end
+E = sum((fi - (a0 + a1*xi)).^2);
 
 % Optional outputs handling
 

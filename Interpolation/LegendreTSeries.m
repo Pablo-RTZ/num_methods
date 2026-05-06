@@ -20,7 +20,7 @@ function [LT, c] = LegendreTSeries(f, N, a, b)
 
 arguments
     f sym
-    N (1,1) int
+    N (1,1) double {mustBeInteger, mustBeNonnegative}
     a (1,1) double
     b (1,1) double {mustBeGreaterThan(b, a)}
 end
