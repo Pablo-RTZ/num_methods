@@ -44,7 +44,7 @@ end
 iter = 1;
 dif = opts.tol +1;
 Iprev = 0;
-x = 10;
+x = 2/(b-a);
 
 while abs(dif) > opts.tol && iter < opts.maxiter
 

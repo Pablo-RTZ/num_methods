@@ -90,3 +90,136 @@ Examples:
 - Trapezoidal corrector: uses the implicit trapezoidal formula with $f(t_{k+1}, y_{k+1})$.
 
 This approach is not restricted to these two rules; any implicit integrator that is consistent and stable with respect to the step size can be used as the corrector.
+
+## Boundary Value Problems (BVP)
+
+The methods in this section solve second-order boundary value problems with Dirichlet boundary conditions. A general second-order ODE is written as a system of two first-order ODEs to be integrated from the starting point to the endpoint, and the boundary condition at the end is used to determine unknown parameters at the start. This programs are restricted to Dirichlet second order problems, as higher order ones require distinct formulations for each type of boundary conditions
+
+### LinearShooting
+
+The linear shooting method solves second-order linear BVPs of the form:
+
+$$y''(x) + p(x)y'(x) + q(x)y(x) = r(x), \qquad y(a) = \alpha, \quad y(b) = \beta$$
+
+**General Approach:**
+
+The key idea is to rewrite the BVP as a linear combination of two initial value problems. Let $y_1(x)$ be the solution to:
+
+$$y_1''(x) + p(x)y_1'(x) + q(x)y_1(x) = r(x), \qquad y_1(a) = \alpha, \quad y_1'(a) = 0$$
+
+and let $y_2(x)$ be the solution to the homogeneous problem:
+
+$$y_2''(x) + p(x)y_2'(x) + q(x)y_2(x) = 0, \qquad y_2(a) = 0, \quad y_2'(a) = 1$$
+
+The general solution to the BVP is:
+
+$$y(x) = y_1(x) + C \, y_2(x)$$
+
+where the constant $C$ is determined by applying the boundary condition at $x = b$:
+
+$$C = \frac{\beta - y_1(b)}{y_2(b)}$$
+
+Each IVP is solved using an ODE integrator (e.g., `ode45`). This method is exact for linear problems (modulo numerical integration errors) and does not require iteration.
+
+### FiniteDifferences
+
+The finite differences method solves the same class of linear BVPs:
+
+$$y''(x) + p(x)y'(x) + q(x)y(x) = r(x), \qquad y(a) = \alpha, \quad y(b) = \beta$$
+
+**General Approach:**
+
+Instead of converting to IVPs, finite differences discretizes the differential equation directly on a mesh. On a uniform mesh $x_0 = a, x_1, \ldots, x_n = b$ with step size $h = (b-a)/n$, the derivatives are approximated using central differences:
+
+$$y'(x_i) \approx \frac{y_{i+1} - y_{i-1}}{2h}$$
+
+$$y''(x_i) \approx \frac{y_{i+1} - 2y_i + y_{i-1}}{h^2}$$
+
+Substituting these into the differential equation at each interior node $x_i$ (for $i = 1, \ldots, n-1$), we obtain:
+
+$$\frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} + p(x_i) \frac{y_{i+1} - y_{i-1}}{2h} + q(x_i) y_i = r(x_i)$$
+
+Rearranging:
+
+$$\left(1 + \frac{h}{2}p(x_i)\right) y_{i+1} + \left(-2 + h^2 q(x_i)\right) y_i + \left(-1 + \frac{h}{2}p(x_i)\right) y_{i-1} = -h^2 r(x_i)$$
+
+This yields a tridiagonal system $A \mathbf{y} = \mathbf{b}$ where:
+
+- The diagonal contains $-2 + h^2 q(x_i)$
+- The superdiagonal contains $1 + \frac{h}{2}p(x_i)$
+- The subdiagonal contains $-1 + \frac{h}{2}p(x_i)$
+- The right-hand side is adjusted at the endpoints to incorporate the boundary conditions
+
+The system is solved using a tridiagonal solver (e.g., `Crout`). This method is second-order accurate in $h$ and is efficient for problems on uniform meshes.
+
+### NonlinearShootingNewton
+
+The nonlinear shooting method with Newton's method solves second-order nonlinear BVPs of the form:
+
+$$y''(x) = f(x, y(x), y'(x)), \qquad y(a) = \alpha, \quad y(b) = \beta$$
+
+**Problem Structure and f:**
+
+The function $f$ must be a function handle that accepts three arguments: `x` (the independent variable), `y` (the solution value), and `yp` (the first derivative $y'$). When the nonlinear shooting method integrates the system, it passes a state vector of four components:
+
+$$\mathbf{u} = [y, y', z, z']^T$$
+
+where:
+
+- $y$ and $y'$ are the solution and its derivative
+- $z$ and $z'$ are the components of the variational equation
+
+The function $f$ is called as `f(x, y, yp)` and should return only the second derivative $y''$. The implementation internally handles the full 4D system by augmenting the ODE.
+
+**General Approach:**
+
+The BVP is solved by converting it to a parameter-dependent IVP. For a guess of the initial slope $t$, we solve:
+
+$$y'(x) = y'(x), \quad y''(x) = f(x, y(x), y'(x)), \qquad y(a) = \alpha, \quad y'(a) = t$$
+
+This yields a solution $y(b; t)$ that depends on the parameter $t$. We seek $t$ such that $y(b; t) = \beta$ by solving the nonlinear equation:
+
+$$g(t) := y(b; t) - \beta = 0$$
+
+**Variational Equations:**
+
+To apply Newton's method, we need the derivative of $g$ with respect to $t$:
+
+$$g'(t) = \frac{\partial y(b; t)}{\partial t}$$
+
+This is obtained by differentiating the ODE system with respect to the parameter $t$. If we denote $z = \frac{\partial y}{\partial t}$ and $w = \frac{\partial y'}{\partial t} = z'$, then differentiating the original ODE:
+
+$$\frac{\partial}{\partial t}\left(y'' = f(x, y, y')\right)$$
+
+yields the variational equations:
+
+$$z'' = \frac{\partial f}{\partial y}(x, y, y') \cdot z + \frac{\partial f}{\partial y'}(x, y, y') \cdot z'$$
+
+with initial conditions:
+
+$$z(a) = 0 \quad \text{(the condition $y(a) = \alpha$ is fixed)}$$
+$$z'(a) = 1 \quad \text{(the initial slope $y'(a) = t$ depends directly on } t \text{)}$$
+
+These variational equations are integrated alongside the original ODE as a system of four first-order ODEs:
+
+$$y' = y', \quad y'' = f(x, y, y'), \quad z' = z', \quad z'' = f_y(x, y, y') \cdot z + f_{y'}(x, y, y') \cdot z'$$
+
+where $f_y$ and $f_{y'}$ denote partial derivatives of $f$.
+
+**Newton's Method Update:**
+
+At each iteration $k$, Newton's method updates the slope estimate as:
+
+$$t_{k+1} = t_k - \frac{y(b; t_k) - \beta}{z(b; t_k)}$$
+
+The method converges when the residual $|y(b; t) - \beta|$ is below a specified tolerance or when the maximum number of iterations is exceeded.
+
+### NonlinearShootingSecant
+
+The nonlinear shooting method with the Secant method is identical to `NonlinearShootingNewton` in the problem formulation and structure, with one exception: instead of computing the derivative $\frac{\partial y(b; t)}{\partial t}$ via the variational equations, it approximates this derivative using finite differences:
+
+$$g'(t) \approx \frac{y(b; t_k) - y(b; t_{k-1})}{t_k - t_{k-1}}$$
+
+**Advantages and Disadvantages:**
+
+The Secant method avoids computing partial derivatives $f_y$ and $f_{y'}$, which can be convenient for complicated functions $f$. However, it requires computing two IVP solutions in the initial step and typically converges more slowly than Newton's method (superlinear convergence with order $\approx 1.618$ versus quadratic for Newton). For smooth functions where derivatives are available, Newton's method is generally preferable.

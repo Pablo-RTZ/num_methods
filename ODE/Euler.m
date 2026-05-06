@@ -1,8 +1,8 @@
-function [X,Y] = Euler(f, a,b, iv, n)
+function [x,y] = Euler(f, a,b, iv, n)
 
 %Euler Euler's method for solving IVP.
 %
-%   [X, Y] = Euler(f,a,b, iv)
+%   [x, y] = Euler(f,a,b, iv)
 %   Solves the problem and returns function at evaluation nodes
 %
 %   Inputs:
@@ -13,11 +13,11 @@ function [X,Y] = Euler(f, a,b, iv, n)
 %       n   - Number of nodes to interpolate
 
 arguments
-    f (:,1)
+    f (1,1) function_handle
     a (1,1) double
     b (1,1) double {mustBeGreaterThan(b,a)}
     iv (:,1) double
-    n (1,1) int = 10
+    n (1,1) double {mustBeInteger,mustBePositive} = 10
 end
 
 % Initialization

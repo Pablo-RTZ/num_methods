@@ -1,6 +1,6 @@
 # Roadmap
 
-This document is meant to plan out the components of the repository, both finished, work in progress and possible future expansions.
+This document is meant to plan out the components of the repository, both finished, as well as possible future expansions.
 
 ## Done
 
@@ -10,9 +10,6 @@ This document is meant to plan out the components of the repository, both finish
 - IVP
 - Linear Systems + Factorization
 - Non Linear Systems
-
-## Planned
-
 - BVP
 - Example files for the methods
 

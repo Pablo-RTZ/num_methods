@@ -14,7 +14,7 @@ Linear interpolation connects data points with straight lines. For fitting a lin
 
 ## Polynomical interpolation
 
-Polynomial interpolation fits a polynomial of degree $n-1$ through $n$ points. It uses least squares to find coefficients for the best-fit polynomial, returning the coefficients and error.
+Polynomial interpolation fits a polynomial of degree $n-1$ through $n$ points. It uses least squares to find coefficients for the best-fit polynomial, returning the coefficients and error. It is, however, unstable for high degree polynomials, as the system solved is ill-conditioned. Thus, it is rarely used for high degree polynomials.
 
 ## Lagrange and Newton polynomials
 
