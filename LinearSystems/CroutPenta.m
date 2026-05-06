@@ -106,8 +106,8 @@ for i = 1:n
     end
 end
 
-z = SD(L, b);
-sol = SI(U, z);
+z = DS(L, b);
+sol = IS(U, z);
 
 % Optional arguments clearing
 

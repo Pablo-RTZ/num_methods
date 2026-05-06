@@ -45,8 +45,8 @@ for i = 2:n-1
 end
 
 L(n,n) = sqrt(A(n,n)-sum(L(n,1:n-1).^2));
-z = SD(L,b);
-sol = SI(L',z);
+z = DS(L,b);
+sol = IS(L',z);
 
 if nargout <2, clear L; end
 

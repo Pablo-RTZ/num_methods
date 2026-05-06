@@ -23,9 +23,9 @@ function [sol,dif,res,iter,ACOC] = Gradient(A,b,opts)
 arguments
     A (:,:) double
     b (:,1) double
-    opts.x0 (:,1) double = zeros(len(b),1)
-    opts.tol (1,1) double = 1e-8
-    opts.maxiter (1,1) int = 50
+    opts.x0 (:,1) double = zeros(length(b),1)
+    opts.tol (1,1) double = 1e-3
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 200
 end
 
 if size(A,1) ~= size(A,2)
@@ -40,12 +40,13 @@ end
 % Initialization
 
 iter = 0;
-res=tol;
+x0 = opts.x0;
+res=opts.tol;
 dif=1;
 
 % Main program
 
-while res(end)+dif(end)>tol && iter<=maxiter
+while res(end)+dif(end)>opts.tol && iter<=opts.maxiter
     r = b-A*x0;
     t = r'*r/(r'*A*r);
     x = x0+t*r;
@@ -58,8 +59,9 @@ end
 
 ACOC = log(dif(3:end)./dif(2:end-1))./log(dif(2:end-1)./dif(1:end-2));
 
-if res(end)+dif(end)>tol
+if res(end)+dif(end)>opts.tol
     disp('The method has not converged')
+    sol = NaN;
 else
     sol = x;
 end

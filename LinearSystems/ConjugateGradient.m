@@ -23,9 +23,9 @@ function [sol,dif,res,iter,ACOC] = ConjugateGradient(A,b,opts)
 arguments
     A (:,:) double
     b (:,1) double
-    opts.x0 (:,1) double = zeros(len(b),1)
+    opts.x0 (:,1) double = zeros(length(b),1)
     opts.tol (1,1) double = 1e-8
-    opts.maxiter (1,1) int = 50
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 50
 end
 
 if size(A,1) ~= size(A,2)
@@ -39,8 +39,7 @@ end
 
 % Initialization
 
-x0 = x0(:);
-b = b(:);
+x0 = opts.x0;
 r0 = b-A*x0;
 d0 = r0;
 t0 = r0'*d0/(d0'*A*d0);
@@ -55,7 +54,7 @@ iter = 1;
 
 % Main program
 
-while res(end)+dif(end)>tol && iter<=maxiter
+while res(end)+dif(end)>opts.tol && iter<=opts.maxiter
     t = r1'*d1/(d1'*A*d1);
     x = x1+t*d1;
     r = b-A*x;
@@ -72,8 +71,9 @@ end
 
 ACOC = log(dif(3:end)./dif(2:end-1))./log(dif(2:end-1)./dif(1:end-2));
 
-if res(end)+dif(end)>tol
+if res(end)+dif(end)>opts.tol
     disp('The method has not converged')
+    sol = NaN;
 else
     sol = x;
 end

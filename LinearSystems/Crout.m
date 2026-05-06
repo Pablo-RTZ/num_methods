@@ -28,6 +28,7 @@ dI = diag(A,-1);
 
 l(1)=dP(1);
 u(1)=dS(1)/l(1);
+n = length(b);
 
 % Main program
 

@@ -43,8 +43,8 @@ for k = 1:n-1
     end
 end
 
-z = SD(L,b);
-sol = SI(U,z);
+z = DS(L,b);
+sol = IS(U,z);
 
 % Optional output handling
 

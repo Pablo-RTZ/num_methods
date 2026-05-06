@@ -41,6 +41,6 @@ for i = 1:n
 end
 
 z = Q'*b;
-sol = SI(R,z);
+sol = IS(R,z);
 
 end

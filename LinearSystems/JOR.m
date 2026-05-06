@@ -24,9 +24,9 @@ function [sol,dif,res,iter,ACOC] = JOR(A,b,opts)
 arguments
     A (:,:) double
     b (:,1) double
-    opts.x0 (:,1) double = zeros(len(b),1)
+    opts.x0 (:,1) double = zeros(length(b),1)
     opts.tol (1,1) double = 1e-8
-    opts.maxiter (1,1) int = 50
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 50
     opts.w (1,1) double = 0.5
 end
 
@@ -43,17 +43,20 @@ end
 % Initialization
 
 iter = 0;
+x0 = opts.x0;
+w = opts.w;
 
-res=tol;
+res=opts.tol;
 dif=1;
 
 L = tril(A,-1);
 U = triu(A,1);
 Dm1 = diag(1./diag(A));
+n = length(b);
 
 % Main program
 
-while res(end)+dif(end)>tol && iter<=maxiter
+while res(end)+dif(end)>opts.tol && iter<=opts.maxiter
     x = ((1-w)*eye(n)-w*Dm1*(L+U))*x0+w*Dm1*b;
     iter = iter+1;
     res(iter) = norm(A*x-b);
@@ -63,8 +66,9 @@ end
 
 ACOC = log(dif(3:end)./dif(2:end-1))./log(dif(2:end-1)./dif(1:end-2));
 
-if res(end)+dif(end)>tol
+if res(end)+dif(end)>opts.tol
     disp('The method has not converged')
+    sol = NaN;
 else
     sol = x;
 end

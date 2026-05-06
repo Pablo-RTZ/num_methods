@@ -24,9 +24,9 @@ function [sol,dif,res,iter,ACOC] = SOR2(A,b,opts)
 arguments
     A (:,:) double
     b (:,1) double
-    opts.x0 (:,1) double = zeros(len(b),1)
-    opts.tol (1,1) double = 1e-8
-    opts.maxiter (1,1) int = 50
+    opts.x0 (:,1) double = zeros(length(b),1)
+    opts.tol (1,1) double = 1e-4
+    opts.maxiter (1,1) double {mustBeInteger, mustBeNonnegative} = 200
     opts.w (1,1) double = 0.5
 end
 
@@ -38,8 +38,10 @@ end
 
 iter = 0;
 
-res=tol;
+res=opts.tol;
 dif=1;
+w = opts.w;
+x0 = opts.x0;
 
 L = tril(A,-1);
 U = triu(A,1);
@@ -49,8 +51,8 @@ M=U*w+D;
 
 % Main program
 
-while res(end)+dif(end)>tol && iter<=maxiter
-    x = SI(M,((1-w)*D-w*L)*x0+b*w);
+while res(end)+dif(end)>opts.tol && iter<=opts.maxiter
+    x = IS(M,((1-w)*D-w*L)*x0+b*w);
 
     iter=iter+1;
     res(iter)=norm(A*x-b,2);
@@ -60,8 +62,9 @@ end
 
 ACOC = log(dif(3:end)./dif(2:end-1))./log(dif(2:end-1)./dif(1:end-2));
 
-if res(end)+dif(end)>tol
+if res(end)+dif(end)>opts.tol
     disp('The method has not converged')
+    sol = NaN;
 else
     sol = x;
 end

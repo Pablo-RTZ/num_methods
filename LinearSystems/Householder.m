@@ -43,7 +43,7 @@ end
 R=A1;
 
 z = Q'*b;
-sol = SI(R,z);
+sol = IS(R,z);
 
 % Optional output handling
 
