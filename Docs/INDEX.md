@@ -57,6 +57,10 @@
 - [Milne method](ODE.md#milne-method)
   - [Milne-Simpson](ODE.md#milne-simpson)
   - [Milne-Trap](ODE.md#milne-trap)
+- [Linear Shooting](ODE.md#linearshooting)
+- [Finite differences](ODE.md#finitedifferences)
+- [Non Linear Shooting (Newton)](ODE.md#nonlinearshootingnewton)
+- [Non Linear Shooting (Secant)](ODE.md#nonlinearshootingsecant)
 
 ## [Interpolation](Interpolation.md)
 
