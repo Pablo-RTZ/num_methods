@@ -1,5 +1,8 @@
 # num_methods
 
+[![Matlab Version](https://img.shields.io/badge/MATLAB-R2024%2B-blue)](https://www.mathworks.com/products/matlab.html)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE.md)
+
 A repository of academic Matlab scripts ranging various areas of numerical methods. It aims to provide clean and understandable code, more tailored towards academic applications rather than production code.
 
 ## Scope and Audience
@@ -61,3 +64,5 @@ The code in this repository
 This project is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later).
 
 See the [LICENSE](LICENSE.md) file for details.
+
+If you use this repository, please cite following the [citation](citation.cff).
