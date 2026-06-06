@@ -42,6 +42,44 @@ $$y_{k+1} = y_k + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4).$$
 
 RK4 has order of convergence 4.
 
+## DormandPrince
+
+The **Dormand–Prince method** is an explicit embedded Runge–Kutta pair of orders 5 and 4 (often referred to as RK45). It uses 7 function evaluations per step, and can be modified to provide an adaptive error estimate by comparing a fifth-order and a fourth-order solution.
+
+The scheme is:
+
+$$k_1 = f(t_k, y_k),$$
+
+$$k_2 = f!\left(t_k + \frac{1}{5}h,; y_k + h\frac{1}{5}k_1\right),$$
+
+$$k_3 = f!\left(t_k + \frac{3}{10}h,; y_k + h\left(\frac{3}{40}k_1 + \frac{9}{40}k_2\right)\right),$$
+
+$$k_4 = f!\left(t_k + \frac{4}{5}h,; y_k + h\left(\frac{44}{45}k_1 - \frac{56}{15}k_2 + \frac{32}{9}k_3\right)\right),$$
+
+$$k_5 = f!\left(t_k + \frac{8}{9}h,; y_k + h\left(\frac{19372}{6561}k_1 - \frac{25360}{2187}k_2 + \frac{64448}{6561}k_3 - \frac{212}{729}k_4\right)\right),$$
+
+$$k_6 = f!\left(t_k + h,; y_k + h\left(\frac{9017}{3168}k_1 - \frac{355}{33}k_2 + \frac{46732}{5247}k_3 + \frac{49}{176}k_4 - \frac{5103}{18656}k_5\right)\right),$$
+
+$$k_7 = f!\left(t_k + h,; y_k + h\left(\frac{35}{384}k_1 + \frac{500}{1113}k_3 + \frac{125}{192}k_4 - \frac{2187}{6784}k_5 + \frac{11}{84}k_6\right)\right).$$
+
+### Fifth-order solution (main update)
+
+$$y_{k+1} = y_k + h\left(\frac{35}{384}k_1 + \frac{500}{1113}k_3 + \frac{125}{192}k_4 - \frac{2187}{6784}k_5 + \frac{11}{84}k_6\right).$$
+
+### Embedded fourth-order solution
+
+$$y_{k+1}^* = y_k + h\left(\frac{5179}{57600}k_1 + \frac{7571}{16695}k_3 + \frac{393}{640}k_4 - \frac{92097}{339200}k_5 + \frac{187}{2100}k_6 + \frac{1}{40}k_7\right).$$
+
+### Error estimate
+
+An estimate of the local truncation error is obtained by:
+
+$$e_{k+1} = y_{k+1} - y_{k+1}^*.$$
+
+This error estimate is typically used to adapt the step size (h), making Dormand–Prince especially useful for adaptive step-size methods. This repository's implementation, however, only has the fifth order solution implemented.
+
+The Dormand–Prince method has **fifth-order convergence**.
+
 ## AdamsBashforth
 
 Adams-Bashforth is a linear multistep method. The implementation in this repository uses the two-step Adams-Bashforth formula:

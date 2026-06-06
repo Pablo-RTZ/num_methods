@@ -53,6 +53,7 @@
 - [Euler](ODE.md#euler)
 - [Heun](ODE.md#heun)
 - [RungeKutta](ODE.md#rungekutta)
+- [DormandPrince](ODE.md#dormandprince)
 - [AdamsBashforth](ODE.md#adamsbashforth)
 - [Milne method](ODE.md#milne-method)
   - [Milne-Simpson](ODE.md#milne-simpson)
